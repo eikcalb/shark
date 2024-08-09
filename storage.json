@@ -1,0 +1,49 @@
+{
+    "299f6d20-cfbd-4bca-a2c7-3555da9cb0f2": [
+        {
+            "type": {
+                "id": "299f6d20-cfbd-4bca-a2c7-3555da9cb0f2",
+                "name": "Shoes",
+                "forSale": true,
+                "price": 5000
+            },
+            "size": 250
+        },
+        {
+            "type": {
+                "id": "299f6d20-cfbd-4bca-a2c7-3555da9cb0f2",
+                "name": "Shoes",
+                "forSale": true,
+                "price": 5000
+            },
+            "size": 500
+        },
+        {
+            "type": {
+                "id": "299f6d20-cfbd-4bca-a2c7-3555da9cb0f2",
+                "name": "Shoes",
+                "forSale": true,
+                "price": 5000
+            },
+            "size": 1000
+        },
+        {
+            "type": {
+                "id": "299f6d20-cfbd-4bca-a2c7-3555da9cb0f2",
+                "name": "Shoes",
+                "forSale": true,
+                "price": 5000
+            },
+            "size": 2000
+        },
+        {
+            "type": {
+                "id": "299f6d20-cfbd-4bca-a2c7-3555da9cb0f2",
+                "name": "Shoes",
+                "forSale": true,
+                "price": 5000
+            },
+            "size": 5000
+        }
+    ]
+}
