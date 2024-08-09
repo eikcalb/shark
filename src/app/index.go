@@ -80,6 +80,12 @@ func (app Application) Run() (err error) {
 	// Run registered services.
 	ctx = context.WithValue(ctx, constants.CONTEXT_APPLICATION_VERSION_KEY, app.config.Version)
 	ctx = context.WithValue(ctx, constants.CONTEXT_SERVICE_PORT_KEY, app.config.Port)
+
+	envPort, ok := os.LookupEnv("PORT")
+	if ok {
+		ctx = context.WithValue(ctx, constants.CONTEXT_SERVICE_PORT_KEY, envPort)
+	}
+
 	go app.sm.Run(ctx)
 
 	osSignalChannel := make(chan os.Signal, 1)
