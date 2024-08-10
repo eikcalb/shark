@@ -37,7 +37,29 @@ func TestInventory(t *testing.T) {
 	}
 
 	t.Run("Inventory.ProcessOrder()", func(t *testing.T) {
-		t.Run("Should return packs to fullfil an order", func(t *testing.T) {
+		t.Run("Should return packs to fullfil an order of 251", func(t *testing.T) {
+			setup()
+
+			result := inv.ProcessOrder(item1.Id.String(), 1)
+
+			if len(result) != 1 {
+				assertEqual(t, 1, len(result))
+			}
+			if result[pack1] != 1 {
+				assertEqual(t, 1, result[pack1])
+			}
+
+			result = inv.ProcessOrder(item1.Id.String(), 251)
+
+			if len(result) != 1 {
+				assertEqual(t, 1, len(result))
+			}
+			if result[pack2] != 1 {
+				assertEqual(t, 1, result[pack2])
+			}
+		})
+
+		t.Run("Should return packs to fullfil an order 12001", func(t *testing.T) {
 			setup()
 
 			result := inv.ProcessOrder(item1.Id.String(), 1)

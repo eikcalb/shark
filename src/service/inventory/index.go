@@ -218,12 +218,13 @@ func (i *Inventory) ProcessOrder(itemID string, count int) InventoryOrder {
 		// We need to check if the remaining orders fit into this pack or we need a
 		// smaller pack. If the current count is less than this pack and we need to find a
 		// smaller pack.
-		if currentCount >= int(currentPack.Size) {
+		currentPackSize := int(currentPack.Size)
+		if currentCount >= currentPackSize {
 			// This pack can contain the items, so we subtract the current count.
 			// Deduct the current pack size from the current count.
-			currentCount -= int(currentPack.Size)
+			currentCount -= currentPackSize
 			result[*currentPack]++
-			log.Info("Updated order remaining count", "itemID", itemID, "count", currentCount, "size", currentPack.Size)
+			log.Info("Updated order remaining count", "itemID", itemID, "count", currentCount, "size", currentPackSize)
 
 			continue
 		}
@@ -232,16 +233,20 @@ func (i *Inventory) ProcessOrder(itemID string, count int) InventoryOrder {
 		// for a smaller pack or we continue using the last pack available. The PackSet
 		// returned we have is a copy of the actual PackSet making it
 		// safe to trust that the index of packs will not change for out variable.
-		if currentIndex > 0 {
+		//
+		// We will also check that the lowest pack has enough used only when there is no
+		// bigger pack.
+		if currentIndex > 0 && (currentIndex > 1 || int(packsSlice[0].Size) >= currentCount) {
 			// If this is not the last pack, try using the next lower pack.
 			currentIndex--
 			currentPack = &packsSlice[currentIndex]
-			log.Info("Changed pack", "itemID", itemID, "count", currentCount, "size", currentPack.Size)
+			log.Info("Changed pack", "itemID", itemID, "count", currentCount, "size", currentPackSize)
+
 			continue
 		}
-		// At this point, we are already at the smallest pack and we still have orders
-		// to fulfill, so we use what we have.
-		currentCount -= int(currentPack.Size)
+		// At this point, we are already at the smallest possible pack and we still have
+		// orders to fulfill, so we use what we have.
+		currentCount -= currentPackSize
 		result[*currentPack]++
 	}
 
